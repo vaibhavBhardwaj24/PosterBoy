@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { getORM } from "@/db/init";
 import { RequestHistory } from "@/entities/RequestHistory";
 import { RequestData } from "@/types";
+import { ObjectId } from "@mikro-orm/mongodb";
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,6 +43,7 @@ export async function POST(request: NextRequest) {
         const em = orm.em.fork();
 
         const historyEntry = em.create(RequestHistory, {
+          _id: new ObjectId(),
           method,
           url,
           headers,
@@ -73,6 +75,7 @@ export async function POST(request: NextRequest) {
         const em = orm.em.fork();
 
         const historyEntry = em.create(RequestHistory, {
+          _id: new ObjectId(),
           method,
           url,
           headers,

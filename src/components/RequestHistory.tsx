@@ -174,7 +174,7 @@ export default function RequestHistory({
         <select
           value={filterMethod}
           onChange={(e) => handleFilterMethod(e.target.value)}
-          className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 text-black py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Methods</option>
           <option value="GET">GET</option>
@@ -194,9 +194,9 @@ export default function RequestHistory({
       ) : (
         <>
           <div className="space-y-2 max-h-96 overflow-y-auto">
-            {history.map((item) => (
+            {history.map((item, i) => (
               <div
-                key={item._id}
+                key={i}
                 className="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 transition-colors cursor-pointer group"
                 onClick={() => onLoadRequest(item)}
               >
