@@ -73,7 +73,7 @@ export default function RequestBuilder({
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://api.example.com/endpoint"
-          className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="text-black flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <button
