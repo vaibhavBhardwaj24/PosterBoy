@@ -12,6 +12,8 @@ export async function GET(request: NextRequest) {
     const method = searchParams.get("method");
     const search = searchParams.get("search");
 
+    console.log("📥 Fetching history:", { page, limit, method, search });
+
     const orm = await getORM();
     const em = orm.em.fork();
 
@@ -26,12 +28,15 @@ export async function GET(request: NextRequest) {
     }
 
     const total = await em.count(RequestHistory, filters);
+    console.log("📊 Total records found:", total);
 
     const history = await em.find(RequestHistory, filters, {
       orderBy: { timestamp: "DESC" },
       limit,
       offset: skip,
     });
+
+    console.log("✅ Successfully fetched", history.length, "records");
 
     const totalPages = Math.ceil(total / limit);
 
@@ -44,9 +49,16 @@ export async function GET(request: NextRequest) {
       hasMore: page < totalPages,
     });
   } catch (error) {
-    console.error("Failed to fetch history:", error);
+    console.error("❌ Failed to fetch history:", error);
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined,
+    });
     return NextResponse.json(
-      { error: "Failed to fetch history" },
+      {
+        error: "Failed to fetch history",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }
