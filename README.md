@@ -1,36 +1,159 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# REST Client Application
 
-## Getting Started
+A Postman-like REST client built with Next.js, React, and MikroORM for testing HTTP APIs.
 
-First, run the development server:
+## Features
+
+- ✅ Support for GET, POST, PUT, DELETE HTTP methods
+- ✅ Custom headers editor
+- ✅ JSON request body editor
+- ✅ Response display with tabs (Body, Headers, Raw)
+- ✅ Request history with MongoDB persistence
+- ✅ **Infinite scroll with lazy loading** for efficient data handling
+- ✅ **Client-side caching** for instant navigation
+- ✅ **Search and filter** functionality (by URL and method)
+- ✅ **Database indexes** for optimized query performance
+- ✅ Pagination for large datasets (handles 100,000+ records efficiently)
+- ✅ Beautiful, modern UI with Tailwind CSS
+- ✅ No page reloads - fully client-side
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React 19, TypeScript
+- **Styling**: Tailwind CSS v4
+- **Database**: MongoDB with MikroORM
+- **HTTP Client**: Axios
+
+## Setup Instructions
+
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure MongoDB
+
+Create a `.env.local` file in the root directory:
+
+```env
+MONGODB_URI=your_mongodb_connection_string_here
+MONGODB_DB_NAME=rest-client
+```
+
+Replace `your_mongodb_connection_string_here` with your actual MongoDB connection string.
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Making Requests
 
-## Learn More
+1. Select HTTP method (GET, POST, PUT, DELETE)
+2. Enter the API endpoint URL
+3. Add headers (optional)
+4. Add request body for POST/PUT (optional)
+5. Click "Send"
 
-To learn more about Next.js, take a look at the following resources:
+### Viewing Responses
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Body**: View formatted JSON response
+- **Headers**: See all response headers
+- **Raw**: View complete raw response
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Request History
 
-## Deploy on Vercel
+- All requests are automatically saved to MongoDB
+- Click any history item to reload it
+- Delete individual items or clear all history
+- Pagination for large datasets (20 items per page)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+poster-boy/
+├── app/
+│   ├── api/
+│   │   ├── proxy/          # HTTP proxy endpoint
+│   │   └── history/        # History CRUD endpoints
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx            # Main application
+├── src/
+│   ├── components/
+│   │   ├── HeaderEditor.tsx
+│   │   ├── RequestBuilder.tsx
+│   │   ├── ResponseDisplay.tsx
+│   │   └── RequestHistory.tsx
+│   ├── db/
+│   │   ├── init.ts         # Database initialization
+│   │   └── mikro-orm.config.ts
+│   ├── entities/
+│   │   └── RequestHistory.ts
+│   ├── types/
+│   │   └── index.ts
+│   └── utils/
+│       └── formatters.ts
+└── .env.local              # Environment variables
+```
+
+## API Endpoints
+
+### POST /api/proxy
+
+Make HTTP requests through the proxy.
+
+**Request Body:**
+
+```json
+{
+  "method": "GET",
+  "url": "https://api.example.com/data",
+  "headers": {
+    "Authorization": "Bearer token"
+  },
+  "body": "{\"key\": \"value\"}"
+}
+```
+
+### GET /api/history
+
+Get paginated request history.
+
+**Query Parameters:**
+
+- `page`: Page number (default: 1)
+- `limit`: Items per page (default: 20)
+
+### GET /api/history/[id]
+
+Get a specific history item by ID.
+
+### DELETE /api/history/[id]
+
+Delete a specific history item.
+
+### DELETE /api/history
+
+Clear all history.
+
+## Development
+
+Built for an internship assignment demonstrating:
+
+- Full-stack Next.js development
+- MongoDB integration with MikroORM
+- RESTful API design
+- Modern React patterns
+- TypeScript best practices
+- Efficient data handling (pagination)
+
+## License
+
+MIT

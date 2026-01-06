@@ -13,13 +13,20 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/components/*": ["./src/components/*"],
+      "@/db/*": ["./src/db/*"],
+      "@/entities/*": ["./src/entities/*"],
+      "@/types": ["./src/types"],
+      "@/utils/*": ["./src/utils/*"]
     }
   },
   "include": [
