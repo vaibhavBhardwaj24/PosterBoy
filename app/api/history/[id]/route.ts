@@ -5,14 +5,15 @@ import { ObjectId } from "@mikro-orm/mongodb";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const orm = await getORM();
     const em = orm.em.fork();
 
     const historyItem = await em.findOne(RequestHistory, {
-      _id: new ObjectId(params.id),
+      _id: new ObjectId(id),
     });
 
     if (!historyItem) {
@@ -34,14 +35,15 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const orm = await getORM();
     const em = orm.em.fork();
 
     const historyItem = await em.findOne(RequestHistory, {
-      _id: new ObjectId(params.id),
+      _id: new ObjectId(id),
     });
 
     if (!historyItem) {
