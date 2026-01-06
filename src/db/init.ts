@@ -20,8 +20,11 @@ export async function getORM(): Promise<MikroORM<MongoDriver>> {
 
     orm = await MikroORM.init<MongoDriver>(config);
 
-    // Test the connection
-    await orm.em.getConnection().execute("db.runCommand({ ping: 1 })");
+    // Verify connection is established
+    const isConnected = await orm.isConnected();
+    if (!isConnected) {
+      throw new Error("Failed to establish MongoDB connection");
+    }
 
     console.log("✅ Successfully connected to MongoDB");
     return orm;
