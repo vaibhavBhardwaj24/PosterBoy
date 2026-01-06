@@ -52,18 +52,18 @@ export default function HeaderEditor({ headers, onChange }: HeaderEditorProps) {
               placeholder="Header name"
               value={key}
               onChange={(e) => updateHeader(key, e.target.value, value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-black flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="text"
               placeholder="Header value"
               value={value}
               onChange={(e) => updateHeader(key, key, e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-black flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               onClick={() => removeHeader(key)}
-              className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg"
+              className="text-black px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg"
             >
               ✕
             </button>
